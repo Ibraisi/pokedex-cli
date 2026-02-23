@@ -34,11 +34,16 @@ Data is fetched from [PokéAPI](https://pokeapi.co/) using GET requests, with lo
 
 ## Running the project
 
-Requires [Go](https://go.dev/) and [just](https://github.com/casey/just).
+Requires [Go](https://go.dev/) and optionally [just](https://github.com/casey/just).
 
 ```sh
 just run
 ```
+Without just
+```sh
+go run cmd/main.go
+```
+If you have just:
 You can also use `just --choose` to interactively cycle through and pick a recipe to run.
 
 ### REPL crashes with `signal: killed`
@@ -56,7 +61,7 @@ just run
 
 **Suggested by the project author**
 
-- [ ] Support the up arrow key to cycle through previous commands
+- [X] Support the escape keys to cycle through previous commands
 - [ ] Simulate battles between Pokemon
 - [ ] Keep Pokemon in a party and allow them to level up
 - [ ] Persist the Pokedex to disk so progress is saved between sessions

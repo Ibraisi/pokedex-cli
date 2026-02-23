@@ -1,8 +1,8 @@
 package repl
 
 import (
-	"bufio"
 	"fmt"
+	"io"
 	"maps"
 	"os"
 	"pokedex/internal/command"
@@ -15,22 +15,28 @@ import (
 	dex "pokedex/internal/pokedex"
 	"strings"
 	"time"
+
+	"github.com/chzyer/readline"
 )
 
 func StartRepl() {
 	cache := pokecache.NewCache(time.Hour * 24)
 	dex := dex.NewPokedex()
 	config := command.NewConfig()
-	reader := bufio.NewScanner(os.Stdin)
 	commands := buildCommands(cache, dex)
 
+	rl, err := readline.New("Pokedex> ")
+	if err != nil {
+		panic(err)
+	}
+	defer rl.Close()
+
 	for {
-		fmt.Print("Pokedex> ")
-		if !reader.Scan() {
+		line, err := rl.Readline()
+		if err == readline.ErrInterrupt || err == io.EOF {
 			break
 		}
-
-		words := cleanUpInput(reader.Text())
+		words := cleanUpInput(line)
 		if len(words) == 0 {
 			continue
 		}
