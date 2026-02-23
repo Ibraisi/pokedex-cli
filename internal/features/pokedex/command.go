@@ -11,7 +11,7 @@ func Register(dex *pokedex.Pokedex) map[string]command.CliCommand {
 		"pokedex": {
 			Name:        "pokedex",
 			Description: "pokedex - prints a list of all the names of the Pokemon the user has caught.",
-			Callback:    func(_ *command.Config, _ string) { getPokedex(dex) },
+			Callback:    func(_ *command.Config, _ []string) { getPokedex(dex) },
 		},
 	}
 }

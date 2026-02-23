@@ -13,12 +13,12 @@ func Register(cache *pokecache.Cache) map[string]command.CliCommand {
 		"map": {
 			Name:        "map",
 			Description: "displays the names of 20 location areas in the Pokemon world",
-			Callback:    func(cfg *command.Config, _ string) { getLocations(cfg, cache) },
+			Callback:    func(cfg *command.Config, _ []string) { getLocations(cfg, cache) },
 		},
 		"mapb": {
 			Name:        "mapb",
 			Description: "displays the previous 20 location areas in the Pokemon world",
-			Callback:    func(cfg *command.Config, _ string) { getPrevLocations(cfg, cache) },
+			Callback:    func(cfg *command.Config, _ []string) { getPrevLocations(cfg, cache) },
 		},
 	}
 }

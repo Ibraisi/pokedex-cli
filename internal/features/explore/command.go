@@ -13,17 +13,18 @@ func Register(cache *pokecache.Cache) map[string]command.CliCommand {
 		"explore": {
 			Name:        "explore",
 			Description: "explore <location> - list pokemon available in a location area",
-			Callback:    func(cfg *command.Config, location string) { exploreLocation(location, cache) },
+			Callback: func(cfg *command.Config, args []string) {
+				if len(args) == 0 {
+					fmt.Println("usage: explore <location>")
+					return
+				}
+				exploreLocation(args[0], cache)
+			},
 		},
 	}
 }
 
 func exploreLocation(location string, cache *pokecache.Cache) {
-	if location == "" {
-		fmt.Println("usage: explore <location>")
-		return
-	}
-
 	exploreRes, err := getExploreRes(location, cache)
 	if err != nil {
 		fmt.Println("error:", err)

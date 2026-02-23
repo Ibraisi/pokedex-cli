@@ -11,16 +11,18 @@ func Register(dex *pokedex.Pokedex) map[string]command.CliCommand {
 		"inspect": {
 			Name:        "inspect",
 			Description: "inspect <name> - display stats of a caught Pokemon.",
-			Callback:    func(cfg *command.Config, name string) { inspect(name, dex) },
+			Callback: func(cfg *command.Config, args []string) {
+				if len(args) == 0 {
+					fmt.Println("usage: inspect <pokename>")
+					return
+				}
+				inspect(args[0], dex)
+			},
 		},
 	}
 }
 
 func inspect(name string, dex *pokedex.Pokedex) {
-	if name == "" {
-		fmt.Println("usage: inspect <pokename>")
-		return
-	}
 	p, ok := dex.Get(name)
 	if !ok {
 		fmt.Println("you have not caught that pokemon")

@@ -43,11 +43,7 @@ func StartRepl() {
 
 		v, ok := commands[words[0]]
 		if ok {
-			location := ""
-			if len(words) > 1 {
-				location = words[1]
-			}
-			v.Callback(config, location)
+			v.Callback(config, words[1:])
 		} else {
 			fmt.Println("unknown command")
 		}
@@ -72,12 +68,12 @@ func buildCommands(cache *pokecache.Cache, dex *dex.Pokedex) map[string]command.
 	commands["help"] = command.CliCommand{
 		Name:        "help",
 		Description: "Print help message",
-		Callback:    func(cfg *command.Config, _ string) { commandHelp(commands) },
+		Callback:    func(cfg *command.Config, _ []string) { commandHelp(commands) },
 	}
 	return commands
 }
 
-func commandExit(config *command.Config, _ string) {
+func commandExit(config *command.Config, _ []string) {
 	fmt.Println("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 }

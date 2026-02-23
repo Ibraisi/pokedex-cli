@@ -15,16 +15,18 @@ func Register(cache *pokecache.Cache, dex *pokedex.Pokedex) map[string]command.C
 		"catch": {
 			Name:        "catch",
 			Description: "catch <name> - catching Pokemon adds them to the user's Pokedex.",
-			Callback:    func(cfg *command.Config, name string) { catch(name, cache, dex) },
+			Callback: func(cfg *command.Config, args []string) {
+				if len(args) == 0 {
+					fmt.Println("usage: catch <pokename>")
+					return
+				}
+				catch(args[0], cache, dex)
+			},
 		},
 	}
 }
 
 func catch(name string, cache *pokecache.Cache, dex *pokedex.Pokedex) {
-	if name == "" {
-		fmt.Println("usage: catch <pokename>")
-		return
-	}
 	pokeInfoRes, err := getPokeInfoRes(name, cache)
 	if err != nil {
 		fmt.Println("error", err)
